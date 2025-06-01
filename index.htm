@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Per te 💜</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
       background-color: #ffe6f0;
@@ -53,29 +53,20 @@
       gap: 10px;
     }
 
-    .cookie {
+    .cookie, .heart {
       font-size: 34px;
-      animation: pop 0.3s ease;
-    }
-
-    .heart-button {
-      background-color: transparent;
-      border: none;
-      font-size: 34px;
-      cursor: pointer;
-      animation: pop 0.3s ease;
-    }
-
-    .heart-message {
-      font-size: 20px;
-      color: #af2992;
-      margin-top: 10px;
       animation: pop 0.3s ease;
     }
 
     @keyframes pop {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     #moodBarContainer {
@@ -94,6 +85,29 @@
       transition: width 0.3s ease;
     }
 
+    #heartButton {
+      margin-top: 20px;
+      background: transparent;
+      border: none;
+      font-size: 36px;
+      cursor: pointer;
+      color: #af2992;
+      display: none;
+      transition: transform 0.2s ease;
+    }
+
+    #heartButton:active {
+      transform: scale(1.2);
+    }
+
+    #heartMessage {
+      margin-top: 15px;
+      font-size: 20px;
+      color: #af2992;
+      font-weight: 600;
+      display: none;
+    }
+
     #final-message {
       display: none;
       margin-top: 40px;
@@ -105,7 +119,7 @@
 </head>
 <body>
   <h1>🧸 Clicca l’orsetto per ricevere un regalo 🍪</h1>
-  <img src="orsetto.png" alt="Orsetto" id="bear">
+  <img src="orsetto.png" alt="Orsetto" id="bear" />
 
   <div id="message"></div>
 
@@ -116,6 +130,9 @@
     <div id="moodBar"></div>
   </div>
 
+  <button id="heartButton">💜</button>
+  <div id="heartMessage">Quando ci vediamo ti abbraccerò più non posso</div>
+
   <div id="final-message">Grazie per aver cliccato fino a qui… volevo solo dirti che ti voglio tanto bene.</div>
 
   <script>
@@ -125,8 +142,11 @@
     const finalMessage = document.getElementById("final-message");
     const moodBar = document.getElementById("moodBar");
     const cookieCountText = document.getElementById("cookieCount");
+    const heartButton = document.getElementById("heartButton");
+    const heartMessage = document.getElementById("heartMessage");
 
     let clickCount = 0;
+    let heartShown = false;
 
     bear.addEventListener("click", () => {
       clickCount++;
@@ -134,37 +154,33 @@
       // Messaggio fisso
       message.textContent = "Anche se non sono lì con te, tieni questo";
 
-      // Aggiorna contatore
+      // Aggiorna contatore biscotti
       cookieCountText.textContent = clickCount;
 
-      // Aggiunge un biscotto
+      // Aggiunge biscotto
       const cookie = document.createElement("div");
       cookie.classList.add("cookie");
       cookie.textContent = "🍪";
       cookies.appendChild(cookie);
 
-      // Ogni 5 click: aggiungi bottone cuore
-      if (clickCount % 5 === 0) {
-        const heartButton = document.createElement("button");
-        heartButton.classList.add("heart-button");
-        heartButton.textContent = "💜";
-        heartButton.addEventListener("click", () => {
-          const heartMessage = document.createElement("div");
-          heartMessage.classList.add("heart-message");
-          heartMessage.textContent = "Quando ci vediamo ti abbraccerò più non posso";
-          cookies.appendChild(heartMessage);
-          heartButton.remove(); // Rimuovi il pulsante dopo il click
-        });
-        cookies.appendChild(heartButton);
-      }
-
-      // Aggiorna barra umore
+      // Barra umore
       moodBar.style.width = Math.min(clickCount * 5, 100) + "%";
 
-      // Mostra messaggio finale
+      // Mostra il pulsante cuore dopo 5 click, solo una volta
+      if (clickCount >= 5 && !heartShown) {
+        heartButton.style.display = "inline-block";
+        heartShown = true;
+      }
+
+      // Messaggio finale a 20 click
       if (clickCount === 20) {
         finalMessage.style.display = "block";
       }
+    });
+
+    heartButton.addEventListener("click", () => {
+      heartMessage.style.display = "block";
+      heartButton.style.display = "none";
     });
   </script>
 </body>
