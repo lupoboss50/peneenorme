@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Per te 💜</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #ffe6f0;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 20px;
+      color: #5c2a6b;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    #bear {
+      width: 180px;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    #bear:active {
+      transform: scale(1.1);
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    #cookieCounterBox {
+      margin: 30px auto 10px;
+      padding: 15px 25px;
+      border-radius: 12px;
+      background: #fff4fa;
+      border: 2px solid #e49ecf;
+      width: fit-content;
+      font-size: 18px;
+      font-weight: bold;
+      color: #c14e9b;
+    }
+
+    #cookies {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .cookie {
+      font-size: 34px;
+      animation: pop 0.3s ease;
+    }
+
+    .heart-button {
+      background-color: transparent;
+      border: none;
+      font-size: 34px;
+      cursor: pointer;
+      animation: pop 0.3s ease;
+    }
+
+    .heart-message {
+      font-size: 20px;
+      color: #af2992;
+      margin-top: 10px;
+      animation: pop 0.3s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #moodBarContainer {
+      margin: 30px auto;
+      width: 80%;
+      background: #ddd;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #moodBar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(to right, #ff99cc, #ffccff, #cc99ff, #99ccff, #66ffcc);
+      transition: width 0.3s ease;
+    }
+
+    #final-message {
+      display: none;
+      margin-top: 40px;
+      font-size: 20px;
+      color: #af2992;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧸 Clicca l’orsetto per ricevere un regalo 🍪</h1>
+  <img src="orsetto.png" alt="Orsetto" id="bear">
+
+  <div id="message"></div>
+
+  <div id="cookieCounterBox">Biscotti 🍪: <span id="cookieCount">0</span></div>
+  <div id="cookies"></div>
+
+  <div id="moodBarContainer">
+    <div id="moodBar"></div>
+  </div>
+
+  <div id="final-message">Grazie per aver cliccato fino a qui… volevo solo dirti che ti voglio tanto bene.</div>
+
+  <script>
+    const bear = document.getElementById("bear");
+    const message = document.getElementById("message");
+    const cookies = document.getElementById("cookies");
+    const finalMessage = document.getElementById("final-message");
+    const moodBar = document.getElementById("moodBar");
+    const cookieCountText = document.getElementById("cookieCount");
+
+    let clickCount = 0;
+
+    bear.addEventListener("click", () => {
+      clickCount++;
+
+      // Messaggio fisso
+      message.textContent = "Anche se non sono lì con te, tieni questo";
+
+      // Aggiorna contatore
+      cookieCountText.textContent = clickCount;
+
+      // Aggiunge un biscotto
+      const cookie = document.createElement("div");
+      cookie.classList.add("cookie");
+      cookie.textContent = "🍪";
+      cookies.appendChild(cookie);
+
+      // Ogni 5 click: aggiungi bottone cuore
+      if (clickCount % 5 === 0) {
+        const heartButton = document.createElement("button");
+        heartButton.classList.add("heart-button");
+        heartButton.textContent = "💜";
+        heartButton.addEventListener("click", () => {
+          const heartMessage = document.createElement("div");
+          heartMessage.classList.add("heart-message");
+          heartMessage.textContent = "Quando ci vediamo ti abbraccerò più non posso";
+          cookies.appendChild(heartMessage);
+          heartButton.remove(); // Rimuovi il pulsante dopo il click
+        });
+        cookies.appendChild(heartButton);
+      }
+
+      // Aggiorna barra umore
+      moodBar.style.width = Math.min(clickCount * 5, 100) + "%";
+
+      // Mostra messaggio finale
+      if (clickCount === 20) {
+        finalMessage.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
