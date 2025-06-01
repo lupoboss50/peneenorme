@@ -1,140 +1,249 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <title>Per te 💜</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Sorpresa 💜</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #ffe6f0;
-      font-family: 'Poppins', sans-serif;
+      background-color: #fff0f5;
+      font-family: 'Quicksand', sans-serif;
+      color: #5c2a6b;
       text-align: center;
       padding: 30px;
-      color: #5c2a6b;
     }
 
-    #bear {
-      width: 180px;
+    .orsetto {
+      font-size: 60px;
       cursor: pointer;
-      transition: transform 0.1s ease;
+      transition: transform 0.2s;
     }
 
-    #bear:active {
+    .orsetto:hover {
       transform: scale(1.1);
     }
 
-    #message {
+    .biscotti-box {
       margin-top: 20px;
-      font-size: 18px;
-      font-weight: 600;
+      background-color: #ffe6f0;
+      padding: 15px;
+      border-radius: 15px;
+      display: inline-block;
+      border: 2px solid #e49ecf;
     }
 
-    #cookies {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 32px;
+    .biscotti-box h2 {
+      margin-top: 0;
     }
 
-    .cookie {
-      animation: pop 0.3s ease;
+    .biscotti {
+      font-size: 24px;
+      margin-top: 10px;
     }
 
-    @keyframes pop {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    #heartButton {
+    .heart-button {
       display: none;
-      font-size: 60px;
-      margin-top: 30px;
-      background: none;
+      margin-top: 20px;
+      font-size: 24px;
+      padding: 10px 20px;
       border: none;
+      border-radius: 10px;
+      background-color: #e49ecf;
+      color: white;
       cursor: pointer;
-      animation: glow 1s infinite alternate;
-      color: #af2992;
+      animation: sparkle 1s infinite alternate;
     }
 
-    @keyframes glow {
-      0% {
-        text-shadow: 0 0 5px #ff66cc, 0 0 10px #ff99cc;
-      }
-      100% {
-        text-shadow: 0 0 10px #cc33aa, 0 0 20px #ff66cc;
-      }
+    @keyframes sparkle {
+      from { box-shadow: 0 0 10px #e49ecf; }
+      to { box-shadow: 0 0 20px #ff99cc; }
     }
 
-    #heartMessage {
-      margin-top: 20px;
-      font-size: 20px;
-      font-weight: 600;
-      color: #af2992;
+    .mood-bar-container {
+      width: 100%;
+      max-width: 500px;
+      background-color: #ddd;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 20px auto;
+      height: 20px;
+      border: 2px solid #ccc;
+    }
+
+    .mood-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #aaa;
+      transition: width 0.5s ease, background-color 0.5s ease;
+    }
+
+    .quiz-box, .result-box, .letter-box {
       display: none;
+      background-color: #ffe6f0;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid #e49ecf;
+      margin-top: 30px;
     }
 
-    #final-message {
-      margin-top: 40px;
+    .question {
       font-size: 20px;
-      color: #af2992;
-      font-weight: 600;
-      display: none;
+      margin-bottom: 10px;
+    }
+
+    .answer {
+      display: block;
+      margin: 8px auto;
+      background-color: #fcd6ec;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      width: 80%;
+      max-width: 300px;
+    }
+
+    .answer:hover {
+      background-color: #ffc3e6;
+    }
+
+    .letter-box {
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
-  <h1>🧸 Clicca l’orsetto per un biscotto</h1>
-  <img src="oresetto.png" alt="Orsetto" id="bear" />
 
-  <div id="message"></div>
+  <h1>🍪 Clicka l’orsetto per una sorpresa!</h1>
+  <div class="orsetto" onclick="giveBiscotto()">🧸</div>
 
-  <div id="cookies"></div>
+  <div class="mood-bar-container">
+    <div class="mood-bar" id="moodBar"></div>
+  </div>
 
-  <button id="heartButton">💜</button>
-  <div id="heartMessage">Quando ci vediamo ti abbraccerò più non posso</div>
+  <div class="biscotti-box">
+    <h2>Biscotti 🍪</h2>
+    <div id="biscotti">Hai 0 biscotti!</div>
+    <p id="biscotto-message" style="margin-top:10px;"></p>
+    <button class="heart-button" id="heartBtn" onclick="showQuiz()">💜</button>
+  </div>
 
-  <div id="final-message">Grazie per aver cliccato fino a qui… volevo solo dirti che ti voglio tanto bene.</div>
+  <div class="quiz-box" id="quizBox">
+    <h2>Mini Quiz 💫</h2>
+    <div class="question" id="question1">
+      1. Cosa fai appena torni a casa dopo una giornata pesante?
+    </div>
+    <button class="answer" onclick="selectAnswer(0)">🥔 Mi butto sul letto come una patata</button>
+    <button class="answer" onclick="selectAnswer(1)">🎬🛏️ Apro Netflix e mi infilo sotto le coperte</button>
+    <button class="answer" onclick="selectAnswer(2)">💞 Vado a cercare abbracci ovunque</button>
+
+    <div class="question" id="question2" style="display:none;">
+      2. Che tipo di coccole preferisci?
+    </div>
+    <button class="answer" onclick="selectAnswer(0)" style="display:none;">🫂 Quelle silenziose, solo abbracci forti</button>
+    <button class="answer" onclick="selectAnswer(1)" style="display:none;">🍪📺 Quelle con biscotti, film e zero pensieri</button>
+    <button class="answer" onclick="selectAnswer(2)" style="display:none;">💌 Tutte, anche virtuali se servono</button>
+
+    <div class="question" id="question3" style="display:none;">
+      3. Il tuo mood quando hai il ciclo?
+    </div>
+    <button class="answer" onclick="selectAnswer(0)" style="display:none;">🍫 “Parlatemi solo se portate cioccolato”</button>
+    <button class="answer" onclick="selectAnswer(1)" style="display:none;">💤 “Voglio solo dormire 18 ore”</button>
+    <button class="answer" onclick="selectAnswer(2)" style="display:none;">🐼🔥 “Sono un mix tra un panda e un drago”</button>
+  </div>
+
+  <div class="result-box" id="resultBox"></div>
+
+  <div class="letter-box" id="letterBox">
+    💌 Grazie per aver risposto al mio mini quiz...  
+    <br><br>
+    Volevo solo dirti che ti voglio un bene da morire.  
+    Sei speciale, e anche se non posso sempre starti vicino, ci tengo davvero tanto a te.  
+    Ti penso spesso, anche nei momenti più piccoli.  
+    <br><br>
+    🧸💜  
+    — Tuo rompiscatole preferito
+  </div>
 
   <script>
-    const bear = document.getElementById("bear");
-    const message = document.getElementById("message");
-    const cookies = document.getElementById("cookies");
-    const heartButton = document.getElementById("heartButton");
-    const heartMessage = document.getElementById("heartMessage");
-    const finalMessage = document.getElementById("final-message");
+    let biscotti = 0;
+    let answers = [];
+    let currentQuestion = 1;
 
-    let clickCount = 0;
+    function giveBiscotto() {
+      biscotti++;
+      document.getElementById('biscotti').innerText = `Hai ${biscotti} biscotti!`;
+      document.getElementById('biscotto-message').innerText = "Anche se non sono lì con te, tieni questo 🍪";
 
-    bear.addEventListener("click", () => {
-      clickCount++;
+      updateMoodBar();
 
-      // Frase fissa
-      message.textContent = "Anche se non sono lì con te, tieni questo";
-
-      // Aggiunge biscotto
-      const cookie = document.createElement("div");
-      cookie.classList.add("cookie");
-      cookie.textContent = "🍪";
-      cookies.appendChild(cookie);
-
-      // Mostra bottone cuore al 5° click
-      if (clickCount === 5) {
-        heartButton.style.display = "inline-block";
+      if (biscotti >= 5) {
+        document.getElementById('heartBtn').style.display = "inline-block";
       }
+    }
 
-      // Mostra messaggio finale al 10° click
-      if (clickCount === 10) {
-        finalMessage.style.display = "block";
+    function updateMoodBar() {
+      const bar = document.getElementById('moodBar');
+      let percentage = Math.min((biscotti / 5) * 100, 100);
+      bar.style.width = percentage + "%";
+
+      if (biscotti <= 2) {
+        bar.style.backgroundColor = "#aaa";
+      } else if (biscotti <= 4) {
+        bar.style.backgroundColor = "#ffcc66";
+      } else {
+        bar.style.backgroundColor = "#e49ecf";
       }
-    });
+    }
 
-    heartButton.addEventListener("click", () => {
-      heartMessage.style.display = "block";
-      heartButton.disabled = true;
-      heartButton.style.opacity = 0.6;
-    });
+    function showQuiz() {
+      document.getElementById('quizBox').style.display = "block";
+      showQuestion(1);
+    }
+
+    function showQuestion(n) {
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById(`question${i}`).style.display = i === n ? "block" : "none";
+        const buttons = document.querySelectorAll(`#question${i} ~ .answer`);
+        buttons.forEach((btn, index) => {
+          btn.style.display = i === n ? "block" : "none";
+        });
+      }
+    }
+
+    function selectAnswer(val) {
+      answers.push(val);
+      currentQuestion++;
+      if (currentQuestion <= 3) {
+        showQuestion(currentQuestion);
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      let resultText = "";
+      const total = answers.reduce((a, b) => a + b, 0);
+      if (total <= 2) resultText = "🥔 Patatella da coccolare";
+      else if (total <= 4) resultText = "👑 Regina del Relax";
+      else resultText = "🐯 Tigre tenera con cuore gigante";
+
+      document.getElementById('quizBox').style.display = "none";
+      document.getElementById('resultBox').style.display = "block";
+      document.getElementById('resultBox').innerHTML = `<h2>Risultato:</h2><p>${resultText}</p>`;
+
+      setTimeout(() => {
+        document.getElementById('letterBox').style.display = "block";
+      }, 1000);
+    }
   </script>
+
 </body>
 </html>
