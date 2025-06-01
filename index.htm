@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #fff0f5;
+      background-color: #ffdae9;
       font-family: 'Quicksand', sans-serif;
       color: #5c2a6b;
       text-align: center;
@@ -39,6 +39,11 @@
     .biscotti {
       font-size: 24px;
       margin-top: 10px;
+    }
+
+    .biscotti-list {
+      margin-top: 10px;
+      font-size: 30px;
     }
 
     .heart-button {
@@ -77,7 +82,7 @@
       transition: width 0.5s ease, background-color 0.5s ease;
     }
 
-    .quiz-box, .result-box, .letter-box {
+    .quiz-box, .result-box {
       display: none;
       background-color: #ffe6f0;
       padding: 20px;
@@ -109,67 +114,98 @@
       background-color: #ffc3e6;
     }
 
-    .letter-box {
-      animation: fadeIn 1.2s ease forwards;
+    .letter-page {
+      display: none;
+      background-color: #fff0f5;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+      box-sizing: border-box;
+      z-index: 999;
+      overflow-y: auto;
     }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
+    .letter-content {
+      background-color: #ffe6f0;
+      padding: 30px;
+      border-radius: 20px;
+      border: 2px solid #e49ecf;
+      max-width: 600px;
+      margin: 50px auto;
+      font-size: 18px;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #e49ecf;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <h1>🍪 Clicka l’orsetto per una sorpresa!</h1>
-  <div class="orsetto" onclick="giveBiscotto()">🧸</div>
+  <div id="mainPage">
+    <h1>🍪 Clicka l’orsetto per una sorpresa!</h1>
+    <div class="orsetto" onclick="giveBiscotto()">🧸</div>
 
-  <div class="mood-bar-container">
-    <div class="mood-bar" id="moodBar"></div>
+    <div class="mood-bar-container">
+      <div class="mood-bar" id="moodBar"></div>
+    </div>
+
+    <div class="biscotti-box">
+      <h2>Biscotti 🍪</h2>
+      <div id="biscotti">Hai 0 biscotti!</div>
+      <div class="biscotti-list" id="biscottiList"></div>
+      <p id="biscotto-message" style="margin-top:10px;"></p>
+      <button class="heart-button" id="heartBtn" onclick="showQuiz()">💜</button>
+    </div>
+
+    <div class="quiz-box" id="quizBox">
+      <h2>Mini Quiz 💫</h2>
+      <div class="question" id="question1">
+        1. Cosa fai appena torni a casa dopo una giornata pesante?
+      </div>
+      <button class="answer" onclick="selectAnswer(0)">🥔 Mi butto sul letto come una patata</button>
+      <button class="answer" onclick="selectAnswer(1)">🎬🛏️ Apro Netflix e mi infilo sotto le coperte</button>
+      <button class="answer" onclick="selectAnswer(2)">💞 Vado a cercare abbracci ovunque</button>
+
+      <div class="question" id="question2" style="display:none;">
+        2. Che tipo di coccole preferisci?
+      </div>
+      <button class="answer" onclick="selectAnswer(0)" style="display:none;">🫂 Quelle silenziose, solo abbracci forti</button>
+      <button class="answer" onclick="selectAnswer(1)" style="display:none;">🍪📺 Quelle con biscotti, film e zero pensieri</button>
+      <button class="answer" onclick="selectAnswer(2)" style="display:none;">💌 Tutte, anche virtuali se servono</button>
+
+      <div class="question" id="question3" style="display:none;">
+        3. Il tuo mood quando hai il ciclo?
+      </div>
+      <button class="answer" onclick="selectAnswer(0)" style="display:none;">🍫 “Parlatemi solo se portate cioccolato”</button>
+      <button class="answer" onclick="selectAnswer(1)" style="display:none;">💤 “Voglio solo dormire 18 ore”</button>
+      <button class="answer" onclick="selectAnswer(2)" style="display:none;">🐼🔥 “Sono un mix tra un panda e un drago”</button>
+    </div>
+
+    <div class="result-box" id="resultBox"></div>
   </div>
 
-  <div class="biscotti-box">
-    <h2>Biscotti 🍪</h2>
-    <div id="biscotti">Hai 0 biscotti!</div>
-    <p id="biscotto-message" style="margin-top:10px;"></p>
-    <button class="heart-button" id="heartBtn" onclick="showQuiz()">💜</button>
-  </div>
-
-  <div class="quiz-box" id="quizBox">
-    <h2>Mini Quiz 💫</h2>
-    <div class="question" id="question1">
-      1. Cosa fai appena torni a casa dopo una giornata pesante?
+  <div class="letter-page" id="letterPage">
+    <div class="letter-content">
+      💌 Grazie per aver cliccato fino a qui…  
+      <br><br>
+      Volevo solo dirti che ti voglio un bene da morire.  
+      Sei speciale, e anche se non posso sempre starti vicino, ci tengo davvero tanto a te.  
+      Ti penso spesso, anche nei momenti più piccoli.  
+      <br><br>
+      🧸💜  
+      — Tuo rompiscatole preferito
+      <br><br>
+      <button class="back-btn" onclick="goBack()">🔙 Torna alla pagina principale</button>
     </div>
-    <button class="answer" onclick="selectAnswer(0)">🥔 Mi butto sul letto come una patata</button>
-    <button class="answer" onclick="selectAnswer(1)">🎬🛏️ Apro Netflix e mi infilo sotto le coperte</button>
-    <button class="answer" onclick="selectAnswer(2)">💞 Vado a cercare abbracci ovunque</button>
-
-    <div class="question" id="question2" style="display:none;">
-      2. Che tipo di coccole preferisci?
-    </div>
-    <button class="answer" onclick="selectAnswer(0)" style="display:none;">🫂 Quelle silenziose, solo abbracci forti</button>
-    <button class="answer" onclick="selectAnswer(1)" style="display:none;">🍪📺 Quelle con biscotti, film e zero pensieri</button>
-    <button class="answer" onclick="selectAnswer(2)" style="display:none;">💌 Tutte, anche virtuali se servono</button>
-
-    <div class="question" id="question3" style="display:none;">
-      3. Il tuo mood quando hai il ciclo?
-    </div>
-    <button class="answer" onclick="selectAnswer(0)" style="display:none;">🍫 “Parlatemi solo se portate cioccolato”</button>
-    <button class="answer" onclick="selectAnswer(1)" style="display:none;">💤 “Voglio solo dormire 18 ore”</button>
-    <button class="answer" onclick="selectAnswer(2)" style="display:none;">🐼🔥 “Sono un mix tra un panda e un drago”</button>
-  </div>
-
-  <div class="result-box" id="resultBox"></div>
-
-  <div class="letter-box" id="letterBox">
-    💌 Grazie per aver risposto al mio mini quiz...  
-    <br><br>
-    Volevo solo dirti che ti voglio un bene da morire.  
-    Sei speciale, e anche se non posso sempre starti vicino, ci tengo davvero tanto a te.  
-    Ti penso spesso, anche nei momenti più piccoli.  
-    <br><br>
-    🧸💜  
-    — Tuo rompiscatole preferito
   </div>
 
   <script>
@@ -181,6 +217,11 @@
       biscotti++;
       document.getElementById('biscotti').innerText = `Hai ${biscotti} biscotti!`;
       document.getElementById('biscotto-message').innerText = "Anche se non sono lì con te, tieni questo 🍪";
+      
+      const biscottiList = document.getElementById('biscottiList');
+      const newBiscotto = document.createElement("span");
+      newBiscotto.innerText = "🍪 ";
+      biscottiList.appendChild(newBiscotto);
 
       updateMoodBar();
 
@@ -212,7 +253,7 @@
       for (let i = 1; i <= 3; i++) {
         document.getElementById(`question${i}`).style.display = i === n ? "block" : "none";
         const buttons = document.querySelectorAll(`#question${i} ~ .answer`);
-        buttons.forEach((btn, index) => {
+        buttons.forEach((btn) => {
           btn.style.display = i === n ? "block" : "none";
         });
       }
@@ -240,9 +281,15 @@
       document.getElementById('resultBox').innerHTML = `<h2>Risultato:</h2><p>${resultText}</p>`;
 
       setTimeout(() => {
-        document.getElementById('letterBox').style.display = "block";
-      }, 1000);
+        document.getElementById('mainPage').style.display = "none";
+        document.getElementById('letterPage').style.display = "block";
+      }, 1500);
+    }
+
+    function goBack() {
+      document.getElementById('letterPage').style.display = "none";
+      document.getElementById('mainPage').style.display = "block";
     }
   </script>
-
 </body>
+</html>
