@@ -6,11 +6,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #ffdae9;
+      background-color: #FAE6EF; /* Stesso rosa della foto */
       font-family: 'Quicksand', sans-serif;
       color: #5c2a6b;
       text-align: center;
       padding: 30px;
+      overflow-x: hidden; /* Evita scroll orizzontale */
     }
 
     .orsetto {
@@ -114,8 +115,83 @@
       background-color: #ffc3e6;
     }
 
+    /* NUOVE CLASSI PER LA PAGINA DELLA DOMANDA CON L'ORSETTO */
+    .question-page {
+      display: none; /* INIZIALMENTE NASCOSTA - MODIFICATO */
+      background-color: #fff0f5;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+      box-sizing: border-box;
+      z-index: 999;
+      overflow-y: auto;
+      display: flex; /* Per centrare il contenuto */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .question-content {
+      background-color: #ffe6f0;
+      padding: 30px;
+      border-radius: 20px;
+      border: 2px solid #e49ecf;
+      max-width: 500px; /* Adatta la larghezza al contenuto dell'immagine */
+      text-align: center;
+    }
+
+    .otter-image {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+
+    .like-buttons-container {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 40px; /* Spazio tra i bottoni */
+      align-items: center; /* Assicura che i bottoni rimangano allineati verticalmente */
+      flex-wrap: wrap; /* Utile per schermi piccoli se i bottoni diventano molto grandi */
+    }
+
+    .like-button {
+      font-size: 28px; /* Dimensione base del testo */
+      padding: 15px 30px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+      min-width: 150px; /* Per evitare che il testo si rompa se diventa troppo piccolo */
+      white-space: nowrap; /* Evita che il testo vada a capo */
+    }
+
+    .yes-button {
+      background-color: #e49ecf; /* Colore rosa/viola */
+      color: white;
+      box-shadow: 0 0 10px rgba(228, 158, 207, 0.7); /* Piccolo bagliore */
+    }
+
+    .yes-button:hover {
+      background-color: #d17fb8;
+      transform: scale(1.05); /* Piccolo ingrandimento al passaggio del mouse */
+    }
+
+    .no-button {
+      background-color: #fcd6ec; /* Colore più chiaro */
+      color: #5c2a6b;
+      border: 2px solid #e49ecf;
+    }
+
+    .no-button:hover {
+      background-color: #ffc3e6;
+    }
+    /* FINE NUOVE CLASSI */
+
     .letter-page {
-      display: none;
+      display: none; /* INIZIALMENTE NASCOSTA - MODIFICATO */
       background-color: #fff0f5;
       position: fixed;
       top: 0; left: 0;
@@ -170,27 +246,36 @@
       <h2>Mini Quiz 💫</h2>
       <div class="question" id="question1">
         1. Cosa fai appena torni a casa dopo una giornata pesante?
+        <button class="answer" data-question-id="1" onclick="selectAnswer(0)">🥔 Mi butto sul letto come una patata</button>
+        <button class="answer" data-question-id="1" onclick="selectAnswer(1)">🎬🛏️ Apro Netflix e mi infilo sotto le coperte</button>
+        <button class="answer" data-question-id="1" onclick="selectAnswer(2)">💞 Vado a cercare abbracci ovunque</button>
       </div>
-      <button class="answer" onclick="selectAnswer(0)">🥔 Mi butto sul letto come una patata</button>
-      <button class="answer" onclick="selectAnswer(1)">🎬🛏️ Apro Netflix e mi infilo sotto le coperte</button>
-      <button class="answer" onclick="selectAnswer(2)">💞 Vado a cercare abbracci ovunque</button>
 
       <div class="question" id="question2" style="display:none;">
         2. Che tipo di coccole preferisci?
+        <button class="answer" data-question-id="2" onclick="selectAnswer(0)">🫂 Quelle silenziose, solo abbracci forti</button>
+        <button class="answer" data-question-id="2" onclick="selectAnswer(1)">🍪📺 Quelle con biscotti, film e zero pensieri</button>
+        <button class="answer" data-question-id="2" onclick="selectAnswer(2)">💌 Tutte, anche virtuali se servono</button>
       </div>
-      <button class="answer" onclick="selectAnswer(0)" style="display:none;">🫂 Quelle silenziose, solo abbracci forti</button>
-      <button class="answer" onclick="selectAnswer(1)" style="display:none;">🍪📺 Quelle con biscotti, film e zero pensieri</button>
-      <button class="answer" onclick="selectAnswer(2)" style="display:none;">💌 Tutte, anche virtuali se servono</button>
 
       <div class="question" id="question3" style="display:none;">
         3. Il tuo mood quando hai il ciclo?
+        <button class="answer" data-question-id="3" onclick="selectAnswer(0)">🍫 “Parlatemi solo se portate cioccolato”</button>
+        <button class="answer" data-question-id="3" onclick="selectAnswer(1)">💤 “Voglio solo dormire 18 ore”</button>
+        <button class="answer" data-question-id="3" onclick="selectAnswer(2)">🐼🔥 “Sono un mix tra un panda e un drago”</button>
       </div>
-      <button class="answer" onclick="selectAnswer(0)" style="display:none;">🍫 “Parlatemi solo se portate cioccolato”</button>
-      <button class="answer" onclick="selectAnswer(1)" style="display:none;">💤 “Voglio solo dormire 18 ore”</button>
-      <button class="answer" onclick="selectAnswer(2)" style="display:none;">🐼🔥 “Sono un mix tra un panda e un drago”</button>
     </div>
 
     <div class="result-box" id="resultBox"></div>
+  </div>
+
+  <div class="question-page" id="questionPage">
+    <div class="question-content">
+      <img src="castoro.JPG" alt="Un orsetto con fiori che chiede 'Do you like me?'" class="otter-image"> <div class="like-buttons-container">
+        <button id="yesButton" class="like-button yes-button">Sì! 💜</button>
+        <button id="noButton" class="like-button no-button">No... 😔</button>
+      </div>
+    </div>
   </div>
 
   <div class="letter-page" id="letterPage">
@@ -212,6 +297,67 @@
     let biscotti = 0;
     let answers = [];
     let currentQuestion = 1;
+
+    // VARIABILI GLOBALI per il ridimensionamento dei bottoni SÌ/NO (per la questionPage)
+    let yesScale = 1; // Scala iniziale del bottone "Sì"
+    let noScale = 1;  // Scala iniziale del bottone "No"
+    let noOpacity = 1; // Opacità iniziale del bottone "No"
+
+    // Ottieni i riferimenti ai bottoni SÌ e NO (saranno disponibili solo quando la questionPage è visibile)
+    let yesButton, noButton;
+
+    // Funzione per inizializzare i riferimenti ai bottoni Yes/No e i loro eventi
+    // Chiamata quando la questionPage viene mostrata
+    function setupQuestionPageButtons() {
+        if (!yesButton) { // Esegui solo la prima volta che vengono recuperati i riferimenti
+            yesButton = document.getElementById('yesButton');
+            noButton = document.getElementById('noButton');
+
+            // Event Listener per il bottone "No"
+            noButton.addEventListener('click', () => {
+                // Diminuisci il "No" e aumenta il "Sì"
+                noScale = Math.max(0.05, noScale - 0.2); // Scala minima 0.05, riduci di 0.2 per click
+                yesScale = Math.min(2.5, yesScale + 0.25); // Scala massima 2.5, aumenta di 0.25 per click
+                noOpacity = Math.max(0, noOpacity - 0.25); // Opacità minima 0, riduci di 0.25 per click
+
+                updateButtonSizes(); // Applica i cambiamenti
+            });
+
+            // Event Listener per il bottone "Sì"
+            yesButton.addEventListener('click', () => {
+                // Quando "Sì" viene cliccato, si procede alla pagina della lettera
+                document.getElementById('questionPage').style.display = "none";
+                document.getElementById('letterPage').style.display = "block";
+
+                // (Opzionale) Aggiungi un'animazione di "sparkle" al bottone Sì per un momento
+                yesButton.style.animation = 'sparkle 1s infinite alternate';
+                setTimeout(() => {
+                    if (yesButton) { // Controlla che il bottone esista ancora prima di rimuovere l'animazione
+                        yesButton.style.animation = '';
+                    }
+                }, 2000); // Dopo 2 secondi
+            });
+        }
+    }
+
+
+    // Funzione per aggiornare le dimensioni e l'opacità dei bottoni Yes/No
+    function updateButtonSizes() {
+        if (yesButton && noButton) { // Assicurati che i bottoni siano stati inizializzati
+            yesButton.style.transform = `scale(${yesScale})`;
+            noButton.style.transform = `scale(${noScale})`;
+            noButton.style.opacity = noOpacity;
+
+            // Rendi il bottone "No" non cliccabile e fallo scomparire quasi del tutto
+            if (noScale < 0.2 || noOpacity < 0.1) {
+                noButton.style.pointerEvents = 'none'; // Disabilita gli eventi del mouse
+                noButton.style.display = 'none'; // Potresti anche nasconderlo del tutto
+            } else {
+                noButton.style.pointerEvents = 'auto'; // Assicurati che sia cliccabile altrimenti
+                noButton.style.display = 'block'; // Assicurati che sia visibile
+            }
+        }
+    }
 
     function giveBiscotto() {
       biscotti++;
@@ -249,15 +395,23 @@
       showQuestion(1);
     }
 
+    // MODIFICA QUI: showQuestion per mostrare/nascondere correttamente i bottoni
     function showQuestion(n) {
-      for (let i = 1; i <= 3; i++) {
-        document.getElementById(`question${i}`).style.display = i === n ? "block" : "none";
-        const buttons = document.querySelectorAll(`#question${i} ~ .answer`);
-        buttons.forEach((btn) => {
-          btn.style.display = i === n ? "block" : "none";
-        });
-      }
+        // Nascondi tutte le domande e tutti i bottoni
+        document.querySelectorAll('.quiz-box .question').forEach(q => q.style.display = 'none');
+        document.querySelectorAll('.quiz-box .answer').forEach(a => a.style.display = 'none');
+
+        // Mostra la domanda corrente
+        const currentQ = document.getElementById(`question${n}`);
+        if (currentQ) {
+            currentQ.style.display = 'block';
+            // Mostra i bottoni associati a questa domanda
+            document.querySelectorAll(`.answer[data-question-id="${n}"]`).forEach(btn => {
+                btn.style.display = "block";
+            });
+        }
     }
+
 
     function selectAnswer(val) {
       answers.push(val);
@@ -269,6 +423,7 @@
       }
     }
 
+    // FUNZIONE showResult() MODIFICATA
     function showResult() {
       let resultText = "";
       const total = answers.reduce((a, b) => a + b, 0);
@@ -280,16 +435,37 @@
       document.getElementById('resultBox').style.display = "block";
       document.getElementById('resultBox').innerHTML = `<h2>Risultato:</h2><p>${resultText}</p>`;
 
+      // Dopo un breve ritardo, nascondi la mainPage e mostra la questionPage
       setTimeout(() => {
         document.getElementById('mainPage').style.display = "none";
-        document.getElementById('letterPage').style.display = "block";
+        document.getElementById('resultBox').style.display = "none"; // Nascondi anche il box del risultato
+        document.getElementById('questionPage').style.display = "flex"; // Mostra la pagina della domanda
+
+        // Resetta le scale e l'opacità dei bottoni Yes/No per la nuova visualizzazione
+        yesScale = 1;
+        noScale = 1;
+        noOpacity = 1;
+        setupQuestionPageButtons(); // Assicurati che i bottoni siano inizializzati e gli eventi collegati
+        updateButtonSizes(); // Applica i valori iniziali ai bottoni
       }, 1500);
     }
 
     function goBack() {
+      // Questa funzione ti riporta alla pagina principale dalla pagina della lettera
+      // Puoi decidere se mantenerla o rimuoverla se la lettera è il vero finale.
       document.getElementById('letterPage').style.display = "none";
       document.getElementById('mainPage').style.display = "block";
     }
+
+    // Assicurati che i riferimenti ai bottoni Yes/No siano pronti al caricamento del DOM
+    // e che i loro eventi siano collegati una volta.
+    // MODIFICATO: Nascondi le pagine non iniziali all'avvio
+    document.addEventListener('DOMContentLoaded', () => {
+        setupQuestionPageButtons(); // Inizializza i bottoni Yes/No
+        document.getElementById('questionPage').style.display = 'none'; // Nascondi la pagina della lontra
+        document.getElementById('letterPage').style.display = 'none';   // Nascondi la pagina della lettera
+        document.getElementById('mainPage').style.display = 'block';    // Assicurati che la mainPage sia visibile all'inizio
+    });
   </script>
 </body>
 </html>
