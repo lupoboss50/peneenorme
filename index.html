@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #FAE6EF; /* Stesso rosa della foto */
+      background-color: #FCE7EC; /* Stesso rosa della foto della lontra */
       font-family: 'Quicksand', sans-serif;
       color: #5c2a6b;
       text-align: center;
@@ -17,12 +17,28 @@
     .orsetto {
       font-size: 60px;
       cursor: pointer;
-      transition: transform 0.2s;
+      /* Animazione di "rimbalzo" costante */
+      animation: bounce 2s infinite ease-in-out;
+      /* Transizione rapida per effetto click e hover */
+      transition: transform 0.1s ease-out;
     }
 
     .orsetto:hover {
+      /* Leggero ingrandimento al passaggio del mouse, ma l'animazione di rimbalzo CONTINUA */
       transform: scale(1.1);
     }
+
+    /* Animazione al click (quando l'elemento è attivo) */
+    .orsetto:active {
+      transform: scale(0.9); /* L'orsetto si "comprime" leggermente al click */
+    }
+
+    /* Keyframes per l'animazione di rimbalzo dell'orso */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
 
     .biscotti-box {
       margin-top: 20px;
@@ -48,7 +64,7 @@
     }
 
     .heart-button {
-      display: none;
+      display: none; /* Nascosto di default, appare a 5 biscotti */
       margin-top: 20px;
       font-size: 24px;
       padding: 10px 20px;
@@ -66,22 +82,22 @@
     }
 
     .mood-bar-container {
-      width: 100%;
-      max-width: 500px;
+      width: 80%;
+      max-width: 700px;
       background-color: #ddd;
       border-radius: 20px;
       overflow: hidden;
       margin: 20px auto;
-      height: 20px;
+      height: 25px;
       border: 2px solid #ccc;
     }
 
     .mood-bar {
       height: 100%;
       width: 0%;
-      background-color: #aaa;
       transition: width 0.5s ease, background-color 0.5s ease;
     }
+
 
     .quiz-box, .result-box {
       display: none;
@@ -115,10 +131,9 @@
       background-color: #ffc3e6;
     }
 
-    /* NUOVE CLASSI PER LA PAGINA DELLA DOMANDA CON L'ORSETTO */
     .question-page {
-      display: none; /* INIZIALMENTE NASCOSTA - MODIFICATO */
-      background-color: #fff0f5;
+      display: none;
+      background-color: #FCE7EC;
       position: fixed;
       top: 0; left: 0;
       width: 100%;
@@ -127,7 +142,7 @@
       box-sizing: border-box;
       z-index: 999;
       overflow-y: auto;
-      display: flex; /* Per centrare il contenuto */
+      display: flex;
       justify-content: center;
       align-items: center;
     }
@@ -137,8 +152,15 @@
       padding: 30px;
       border-radius: 20px;
       border: 2px solid #e49ecf;
-      max-width: 500px; /* Adatta la larghezza al contenuto dell'immagine */
+      max-width: 500px;
       text-align: center;
+    }
+
+    .otter-question-text {
+      font-size: 28px;
+      color: #5c2a6b;
+      margin-bottom: 20px;
+      font-weight: bold;
     }
 
     .otter-image {
@@ -152,35 +174,35 @@
       margin-top: 30px;
       display: flex;
       justify-content: center;
-      gap: 40px; /* Spazio tra i bottoni */
-      align-items: center; /* Assicura che i bottoni rimangano allineati verticalmente */
-      flex-wrap: wrap; /* Utile per schermi piccoli se i bottoni diventano molto grandi */
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .like-button {
-      font-size: 28px; /* Dimensione base del testo */
+      font-size: 28px;
       padding: 15px 30px;
       border: none;
       border-radius: 15px;
       cursor: pointer;
       transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
-      min-width: 150px; /* Per evitare che il testo si rompa se diventa troppo piccolo */
-      white-space: nowrap; /* Evita che il testo vada a capo */
+      min-width: 150px;
+      white-space: nowrap;
     }
 
     .yes-button {
-      background-color: #e49ecf; /* Colore rosa/viola */
+      background-color: #e49ecf;
       color: white;
-      box-shadow: 0 0 10px rgba(228, 158, 207, 0.7); /* Piccolo bagliore */
+      box-shadow: 0 0 10px rgba(228, 158, 207, 0.7);
     }
 
     .yes-button:hover {
       background-color: #d17fb8;
-      transform: scale(1.05); /* Piccolo ingrandimento al passaggio del mouse */
+      transform: scale(1.05);
     }
 
     .no-button {
-      background-color: #fcd6ec; /* Colore più chiaro */
+      background-color: #fcd6ec;
       color: #5c2a6b;
       border: 2px solid #e49ecf;
     }
@@ -188,11 +210,39 @@
     .no-button:hover {
       background-color: #ffc3e6;
     }
-    /* FINE NUOVE CLASSI */
+
+    .twenty-biscotti-letter-page {
+      display: none;
+      background-color: #FCE7EC;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+      box-sizing: border-box;
+      z-index: 999;
+      overflow-y: auto;
+    }
+
+    .twenty-biscotti-letter-content {
+      background-color: #ffe6f0;
+      padding: 30px;
+      border-radius: 20px;
+      border: 2px solid #e49ecf;
+      max-width: 600px;
+      margin: 50px auto;
+      font-size: 18px;
+    }
+
+    .twenty-biscotti-letter-content h2 {
+        color: #e49ecf;
+        margin-bottom: 20px;
+        font-size: 26px;
+    }
 
     .letter-page {
-      display: none; /* INIZIALMENTE NASCOSTA - MODIFICATO */
-      background-color: #fff0f5;
+      display: none;
+      background-color: #FCE7EC;
       position: fixed;
       top: 0; left: 0;
       width: 100%;
@@ -271,22 +321,36 @@
 
   <div class="question-page" id="questionPage">
     <div class="question-content">
-      <img src="castoro.JPG" alt="Un orsetto con fiori che chiede 'Do you like me?'" class="otter-image"> <div class="like-buttons-container">
+      <div class="otter-question-text">Do you like me?</div>
+      <img src="castoro.JPG" alt="Un orsetto con fiori che chiede 'Do you like me?'" class="otter-image">
+      <div class="like-buttons-container">
         <button id="yesButton" class="like-button yes-button">Sì! 💜</button>
         <button id="noButton" class="like-button no-button">No... 😔</button>
       </div>
     </div>
   </div>
 
+  <div class="twenty-biscotti-letter-page" id="twentyBiscottiLetterPage">
+    <div class="twenty-biscotti-letter-content">
+      <h2>Tesoro mio,</h2>
+      <p>Questa non è solo una lettera, ma un piccolo pensiero pieno d’amore per ricordarti una cosa semplice ma importantissima: ti voglio un bene infinito.</p>
+      <p>Ogni giorno che passa mi rendo conto di quanto tu sia speciale per me. Il mio affetto per te resta sempre lo stesso. Sei una persona speciale, con un cuore d’oro, e mi sento davvero fortunato/a ad averti nella mia vita.</p>
+      <p>Non servono grandi gesti o parole complicate per dirti quanto ci tengo: basta guardare quanto spesso ti penso e quanto il tuo sorriso riesce a cambiare anche le mie giornate più grigie.</p>
+      <p>Spero che questo piccolo pensiero riesca a strapparti un sorriso. Anche quando non te ne accorgi, ti porto sempre con me.</p>
+      <p>Con tantissimo affetto,<br>Il tuo piccolo rompiscatole che non smette mai di pensarti 💌</p>
+      <button class="back-btn" onclick="goBackFromTwentyBiscottiLetter()">🔙 Torna alla pagina principale</button>
+    </div>
+  </div>
+
   <div class="letter-page" id="letterPage">
     <div class="letter-content">
-      💌 Grazie per aver cliccato fino a qui…  
+      💌 Grazie per aver cliccato fino a qui…
       <br><br>
-      Volevo solo dirti che ti voglio un bene da morire.  
-      Sei speciale, e anche se non posso sempre starti vicino, ci tengo davvero tanto a te.  
-      Ti penso spesso, anche nei momenti più piccoli.  
+      Volevo solo dirti che ti voglio un bene da morire.
+      Sei speciale, e anche se non posso sempre starti vicino, ci tengo davvero tanto a te.
+      Ti penso spesso, anche nei momenti più piccoli.
       <br><br>
-      🧸💜  
+      🧸💜
       — Tuo rompiscatole preferito
       <br><br>
       <button class="back-btn" onclick="goBack()">🔙 Torna alla pagina principale</button>
@@ -298,63 +362,51 @@
     let answers = [];
     let currentQuestion = 1;
 
-    // VARIABILI GLOBALI per il ridimensionamento dei bottoni SÌ/NO (per la questionPage)
-    let yesScale = 1; // Scala iniziale del bottone "Sì"
-    let noScale = 1;  // Scala iniziale del bottone "No"
-    let noOpacity = 1; // Opacità iniziale del bottone "No"
+    let yesScale = 1;
+    let noScale = 1;
+    let noOpacity = 1;
 
-    // Ottieni i riferimenti ai bottoni SÌ e NO (saranno disponibili solo quando la questionPage è visibile)
     let yesButton, noButton;
 
-    // Funzione per inizializzare i riferimenti ai bottoni Yes/No e i loro eventi
-    // Chiamata quando la questionPage viene mostrata
+    const moodBarColors = [
+        "#5c2a6b",  // 0-4 biscotti (viola scuro)
+        "#8a2be2",  // 5-9 biscotti (blu violetto)
+        "#ff007f",  // 10-14 biscotti (fucsia)
+        "#ffa500",  // 15-19 biscotti (arancione)
+        "#ff0000"   // 20 biscotti (rosso)
+    ];
+
     function setupQuestionPageButtons() {
-        if (!yesButton) { // Esegui solo la prima volta che vengono recuperati i riferimenti
+        if (!yesButton) {
             yesButton = document.getElementById('yesButton');
             noButton = document.getElementById('noButton');
 
-            // Event Listener per il bottone "No"
             noButton.addEventListener('click', () => {
-                // Diminuisci il "No" e aumenta il "Sì"
-                noScale = Math.max(0.05, noScale - 0.2); // Scala minima 0.05, riduci di 0.2 per click
-                yesScale = Math.min(2.5, yesScale + 0.25); // Scala massima 2.5, aumenta di 0.25 per click
-                noOpacity = Math.max(0, noOpacity - 0.25); // Opacità minima 0, riduci di 0.25 per click
+                noScale = Math.max(0.05, noScale - 0.2);
+                yesScale = Math.min(2.5, yesScale + 0.25);
+                noOpacity = Math.max(0, noOpacity - 0.25);
 
-                updateButtonSizes(); // Applica i cambiamenti
+                updateButtonSizes();
             });
 
-            // Event Listener per il bottone "Sì"
             yesButton.addEventListener('click', () => {
-                // Quando "Sì" viene cliccato, si procede alla pagina della lettera
-                document.getElementById('questionPage').style.display = "none";
-                document.getElementById('letterPage').style.display = "block";
-
-                // (Opzionale) Aggiungi un'animazione di "sparkle" al bottone Sì per un momento
-                yesButton.style.animation = 'sparkle 1s infinite alternate';
-                setTimeout(() => {
-                    if (yesButton) { // Controlla che il bottone esista ancora prima di rimuovere l'animazione
-                        yesButton.style.animation = '';
-                    }
-                }, 2000); // Dopo 2 secondi
+                showLetterPage();
             });
         }
     }
 
-
-    // Funzione per aggiornare le dimensioni e l'opacità dei bottoni Yes/No
     function updateButtonSizes() {
-        if (yesButton && noButton) { // Assicurati che i bottoni siano stati inizializzati
+        if (yesButton && noButton) {
             yesButton.style.transform = `scale(${yesScale})`;
             noButton.style.transform = `scale(${noScale})`;
             noButton.style.opacity = noOpacity;
 
-            // Rendi il bottone "No" non cliccabile e fallo scomparire quasi del tutto
             if (noScale < 0.2 || noOpacity < 0.1) {
-                noButton.style.pointerEvents = 'none'; // Disabilita gli eventi del mouse
-                noButton.style.display = 'none'; // Potresti anche nasconderlo del tutto
+                noButton.style.pointerEvents = 'none';
+                noButton.style.display = 'none';
             } else {
-                noButton.style.pointerEvents = 'auto'; // Assicurati che sia cliccabile altrimenti
-                noButton.style.display = 'block'; // Assicurati che sia visibile
+                noButton.style.pointerEvents = 'auto';
+                noButton.style.display = 'block';
             }
         }
     }
@@ -363,7 +415,7 @@
       biscotti++;
       document.getElementById('biscotti').innerText = `Hai ${biscotti} biscotti!`;
       document.getElementById('biscotto-message').innerText = "Anche se non sono lì con te, tieni questo 🍪";
-      
+
       const biscottiList = document.getElementById('biscottiList');
       const newBiscotto = document.createElement("span");
       newBiscotto.innerText = "🍪 ";
@@ -374,20 +426,57 @@
       if (biscotti >= 5) {
         document.getElementById('heartBtn').style.display = "inline-block";
       }
+
+      if (biscotti === 20) {
+          showTwentyBiscottiLetter();
+      }
     }
 
     function updateMoodBar() {
       const bar = document.getElementById('moodBar');
-      let percentage = Math.min((biscotti / 5) * 100, 100);
+      let percentage = Math.min((biscotti / 20) * 100, 100);
       bar.style.width = percentage + "%";
 
-      if (biscotti <= 2) {
-        bar.style.backgroundColor = "#aaa";
-      } else if (biscotti <= 4) {
-        bar.style.backgroundColor = "#ffcc66";
-      } else {
-        bar.style.backgroundColor = "#e49ecf";
+      let colorIndex;
+      if (biscotti <= 4) {
+          colorIndex = 0;
+      } else if (biscotti <= 9) {
+          colorIndex = 1;
+      } else if (biscotti <= 14) {
+          colorIndex = 2;
+      } else if (biscotti <= 19) {
+          colorIndex = 3;
+      } else { // biscotti >= 20
+          colorIndex = 4;
       }
+      bar.style.backgroundColor = moodBarColors[colorIndex];
+    }
+
+    function showTwentyBiscottiLetter() {
+        document.getElementById('mainPage').style.display = "none";
+        document.getElementById('quizBox').style.display = "none";
+        document.getElementById('resultBox').style.display = "none";
+        document.getElementById('questionPage').style.display = "none";
+        document.getElementById('letterPage').style.display = "none";
+        document.getElementById('twentyBiscottiLetterPage').style.display = "block";
+    }
+
+    function showLetterPage() {
+        document.getElementById('questionPage').style.display = "none";
+        document.getElementById('mainPage').style.display = "none";
+        document.getElementById('quizBox').style.display = "none";
+        document.getElementById('resultBox').style.display = "none";
+        document.getElementById('twentyBiscottiLetterPage').style.display = "none";
+        document.getElementById('letterPage').style.display = "block";
+
+        if (yesButton) {
+            yesButton.style.animation = 'sparkle 1s infinite alternate';
+            setTimeout(() => {
+                if (yesButton) {
+                    yesButton.style.animation = '';
+                }
+            }, 2000);
+        }
     }
 
     function showQuiz() {
@@ -395,23 +484,16 @@
       showQuestion(1);
     }
 
-    // MODIFICA QUI: showQuestion per mostrare/nascondere correttamente i bottoni
     function showQuestion(n) {
-        // Nascondi tutte le domande e tutti i bottoni
         document.querySelectorAll('.quiz-box .question').forEach(q => q.style.display = 'none');
-        document.querySelectorAll('.quiz-box .answer').forEach(a => a.style.display = 'none');
-
-        // Mostra la domanda corrente
         const currentQ = document.getElementById(`question${n}`);
         if (currentQ) {
             currentQ.style.display = 'block';
-            // Mostra i bottoni associati a questa domanda
             document.querySelectorAll(`.answer[data-question-id="${n}"]`).forEach(btn => {
                 btn.style.display = "block";
             });
         }
     }
-
 
     function selectAnswer(val) {
       answers.push(val);
@@ -423,7 +505,6 @@
       }
     }
 
-    // FUNZIONE showResult() MODIFICATA
     function showResult() {
       let resultText = "";
       const total = answers.reduce((a, b) => a + b, 0);
@@ -435,36 +516,52 @@
       document.getElementById('resultBox').style.display = "block";
       document.getElementById('resultBox').innerHTML = `<h2>Risultato:</h2><p>${resultText}</p>`;
 
-      // Dopo un breve ritardo, nascondi la mainPage e mostra la questionPage
       setTimeout(() => {
         document.getElementById('mainPage').style.display = "none";
-        document.getElementById('resultBox').style.display = "none"; // Nascondi anche il box del risultato
-        document.getElementById('questionPage').style.display = "flex"; // Mostra la pagina della domanda
+        document.getElementById('resultBox').style.display = "none";
+        document.getElementById('twentyBiscottiLetterPage').style.display = "none";
+        document.getElementById('questionPage').style.display = "flex";
 
-        // Resetta le scale e l'opacità dei bottoni Yes/No per la nuova visualizzazione
         yesScale = 1;
         noScale = 1;
         noOpacity = 1;
-        setupQuestionPageButtons(); // Assicurati che i bottoni siano inizializzati e gli eventi collegati
-        updateButtonSizes(); // Applica i valori iniziali ai bottoni
+        setupQuestionPageButtons();
+        updateButtonSizes();
       }, 1500);
     }
 
-    function goBack() {
-      // Questa funzione ti riporta alla pagina principale dalla pagina della lettera
-      // Puoi decidere se mantenerla o rimuoverla se la lettera è il vero finale.
-      document.getElementById('letterPage').style.display = "none";
-      document.getElementById('mainPage').style.display = "block";
+    function goBackFromTwentyBiscottiLetter() {
+        document.getElementById('twentyBiscottiLetterPage').style.display = "none";
+        document.getElementById('mainPage').style.display = "block";
+        resetAppState();
     }
 
-    // Assicurati che i riferimenti ai bottoni Yes/No siano pronti al caricamento del DOM
-    // e che i loro eventi siano collegati una volta.
-    // MODIFICATO: Nascondi le pagine non iniziali all'avvio
+    function goBack() {
+      document.getElementById('letterPage').style.display = "none";
+      document.getElementById('mainPage').style.display = "block";
+      resetAppState();
+    }
+
+    function resetAppState() {
+        biscotti = 0;
+        document.getElementById('biscotti').innerText = `Hai ${biscotti} biscotti!`;
+        document.getElementById('biscottiList').innerHTML = "";
+        document.getElementById('biscotto-message').innerText = "";
+        document.getElementById('heartBtn').style.display = "none";
+        updateMoodBar();
+        answers = [];
+        currentQuestion = 1;
+        document.getElementById('quizBox').style.display = "none";
+        document.getElementById('resultBox').style.display = "none";
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-        setupQuestionPageButtons(); // Inizializza i bottoni Yes/No
-        document.getElementById('questionPage').style.display = 'none'; // Nascondi la pagina della lontra
-        document.getElementById('letterPage').style.display = 'none';   // Nascondi la pagina della lettera
-        document.getElementById('mainPage').style.display = 'block';    // Assicurati che la mainPage sia visibile all'inizio
+        setupQuestionPageButtons();
+        document.getElementById('questionPage').style.display = 'none';
+        document.getElementById('letterPage').style.display = 'none';
+        document.getElementById('twentyBiscottiLetterPage').style.display = 'none';
+        document.getElementById('mainPage').style.display = 'block';
+        updateMoodBar();
     });
   </script>
 </body>
